@@ -1,7 +1,9 @@
+// index.js
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
+import dbConnection from '../config/db.js';
 
 dotenv.config();
 
@@ -13,6 +15,14 @@ app.use(cors());
 
 const port = process.env.PORT || 3000;
 
-app.listen(port, () => {
-    console.log(`Server listening at http://localhost:${port} - ${process.env.DB_NAME}`);
+dbConnection.connect((err) => {
+    if (err) {
+        console.error('Error connecting to the database:', err.message);
+        throw err;
+    }
+
+    console.log('Successfully connected to the database.');
+    app.listen(port, () => {
+        console.log(`Server listening at http://localhost:${port} - ${process.env.DB_NAME}`);
+    });
 });
