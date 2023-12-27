@@ -17,14 +17,13 @@ app.use(routes)
 
 const port = process.env.PORT || 3000;
 
-dbConnection.connect((err) => {
-    if (err) {
-        console.error('Error connecting to the database:', err.message);
-        throw err;
-    }
 
-    console.log('Successfully connected to the database.');
-    app.listen(port, () => {
-        console.log(`Server listening at http://localhost:${port} - ${process.env.DB_NAME}`);
-    });
+if (err) {
+    console.error('Error connecting to the database:', err.message);
+    throw err;
+}
+
+console.log('Successfully connected to the database.');
+app.listen(port, () => {
+    console.log(`Server listening at http://localhost:${port} - ${process.env.DB_NAME}`);
 });
